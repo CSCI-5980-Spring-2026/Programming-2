@@ -11,6 +11,7 @@ namespace GopherEngine {
         style_ = sf::Style::Default;
         state_ = sf::State::Windowed;
         vertical_sync_ = true;
+        dirty_ = false;
     }
 
     Window::~Window()
@@ -65,6 +66,14 @@ namespace GopherEngine {
         return height_;
     }
 
+    bool Window::get_dirty() {
+        return dirty_;
+    }
+
+    void Window::set_dirty(bool dirty) {
+        dirty_ = dirty;
+    }
+
     bool Window::is_open() {
         if(window_ != nullptr)
             return window_->isOpen();
@@ -89,8 +98,17 @@ namespace GopherEngine {
             {
                 width_ = resized->size.x;
                 height_ = resized->size.y;
-                //dirty_ = true;
+                dirty_ = true;
             }
+        }
+    }
+
+    void Window::display() {
+        if(window_ == nullptr) {
+            std::cerr << "Error: window has not been created yet" << std::endl;
+        }
+        else {
+            window_->display();
         }
     }
 }
