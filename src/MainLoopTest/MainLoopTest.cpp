@@ -4,13 +4,40 @@
  * License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
  */ 
 
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
+#include <GopherEngine/Core/MainLoop.hpp>
+using namespace GopherEngine;
 
 #include <iostream>
 
+class GopherEngineTest: public MainLoop
+{
+	public:
+		GopherEngineTest();
+		~GopherEngineTest();
+	private:
+		void initialize() override;
+};
+
+GopherEngineTest::GopherEngineTest()
+{
+}
+
+GopherEngineTest::~GopherEngineTest()
+{
+}
+
+void GopherEngineTest::initialize()
+{
+	std::cout << "GopherEngineTest initialized!" << std::endl;
+}
+
+
 int main()
 {
+	GopherEngineTest app;
+	return app.run();
+	
+	/*
 	// Request a 24-bit depth buffer when creating the window
 	sf::ContextSettings contextSettings;
 	contextSettings.depthBits   = 24;
@@ -144,4 +171,5 @@ int main()
     }
 
 	return EXIT_SUCCESS;
+	*/
 }
