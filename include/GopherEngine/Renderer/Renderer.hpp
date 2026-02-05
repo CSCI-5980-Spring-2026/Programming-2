@@ -1,14 +1,14 @@
 #pragma once
 
-#include <GopherEngine/Platform/Window.hpp>
-
-namespace GopherEngine {
-    class Renderer {
+namespace GopherEngine
+{
+    class Renderer
+    {
         public:
             Renderer();
             ~Renderer();
-            void initialize(Window& window);
-            void resize_viewport(int width, int height);
+            void initialize(unsigned int width, unsigned int height);
+            void resize_viewport(unsigned int width, unsigned int height);
             void draw();
     };
-} 
+}

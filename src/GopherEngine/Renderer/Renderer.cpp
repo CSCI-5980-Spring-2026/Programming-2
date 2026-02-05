@@ -1,18 +1,16 @@
 #include <GopherEngine/Renderer/Renderer.hpp>
 
 #include <SFML/OpenGL.hpp>
-#include <iostream>
+#include <array>
 
 namespace GopherEngine {
     Renderer::Renderer()
-    {
-    }
+    {}
 
     Renderer::~Renderer()
-    {
-    }
+    {}
 
-    void Renderer::initialize(Window &window)
+    void Renderer::initialize(unsigned int width, unsigned int height)
     {
         // Graphics initialization
         glEnable(GL_DEPTH_TEST);
@@ -20,10 +18,10 @@ namespace GopherEngine {
         glClearDepth(1.f);
         glDisable(GL_LIGHTING);
 
-        resize_viewport(window.get_width(), window.get_height());
+        resize_viewport(width, height);
     }
 
-    void Renderer::resize_viewport(int width, int height) {
+    void Renderer::resize_viewport(unsigned int width, unsigned int height) {
         glViewport(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height));
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -32,7 +30,7 @@ namespace GopherEngine {
     }
 
     void Renderer::draw() {
-        
+
         // Clear the buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

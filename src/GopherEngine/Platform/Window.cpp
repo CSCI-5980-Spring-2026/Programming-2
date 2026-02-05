@@ -8,33 +8,15 @@ namespace GopherEngine {
         title_ = title;
         width_ = width;
         height_ = height;
+        dirty_ = false;
+        vertical_sync_ = true;
         style_ = sf::Style::Default;
         state_ = sf::State::Windowed;
-        vertical_sync_ = true;
-        dirty_ = false;
     }
 
-    Window::~Window()
-    {
+    Window::~Window() {
         if(window_ != nullptr)
             delete window_;
-    }
-
-    void Window::create_window() {
-         if(window_ != nullptr)
-            delete window_;
-
-        sf::ContextSettings contextSettings;
-        contextSettings.depthBits   = 24;
-        contextSettings.sRgbCapable = true;
-
-        window_ = new sf::Window(sf::VideoMode({width_, height_}), 
-            static_cast<sf::String>(title_),
-            style_,
-            state_,
-            contextSettings);
-
-        window_->setVerticalSyncEnabled(vertical_sync_);
     }
 
     void Window::set_size(unsigned int width, unsigned int height) {
@@ -58,6 +40,14 @@ namespace GopherEngine {
         vertical_sync_ = vertical_sync;
     }
 
+    bool Window::set_active(bool active) {
+        if (window_ == nullptr) {
+            std::cerr << "Error: window has not been created yet" << std::endl;
+            return false;
+        }
+        return window_->setActive(active);
+    }
+
     int Window::get_width() {
         return width_;
     }
@@ -66,19 +56,36 @@ namespace GopherEngine {
         return height_;
     }
 
-    bool Window::get_dirty() {
-        return dirty_;
+    bool Window::is_open() {
+        if(window_ != nullptr)
+            return window_->isOpen();
+        else
+            return false;
     }
 
     void Window::set_dirty(bool dirty) {
         dirty_ = dirty;
     }
 
-    bool Window::is_open() {
+    bool Window::get_dirty() {
+        return dirty_;
+    }
+
+    void Window::create_window() {
         if(window_ != nullptr)
-            return window_->isOpen();
-        else
-            return false;
+            delete window_;
+        
+        sf::ContextSettings contextSettings;
+        contextSettings.depthBits   = 24;
+        contextSettings.sRgbCapable = true;
+
+        window_ = new sf::Window(sf::VideoMode({width_, height_}), 
+                        static_cast<sf::String>(title_),
+                        style_,
+                        state_,
+                        contextSettings);
+                        
+        window_->setVerticalSyncEnabled(vertical_sync_);
     }
 
     void Window::handle_events() {

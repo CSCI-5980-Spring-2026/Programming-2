@@ -46,13 +46,15 @@ target_link_libraries(GopherEngineRenderer PUBLIC SFML::Window)
 
 # Test executable
 add_executable(MainLoopTest)
+target_compile_features(MainLoopTest PRIVATE cxx_std_17)
+target_include_directories(MainLoopTest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 file(GLOB_RECURSE TESTAPP_SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MainLoopTest/*.cpp
 )
 target_sources(MainLoopTest PRIVATE ${TESTAPP_SOURCES})
-target_compile_features(MainLoopTest PRIVATE cxx_std_17)
 target_link_libraries(MainLoopTest PRIVATE GopherEngineCore)
 target_link_libraries(MainLoopTest PRIVATE GopherEnginePlatform)
 target_link_libraries(MainLoopTest PRIVATE GopherEngineRenderer)
 
+# Set startup project
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT MainLoopTest)

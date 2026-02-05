@@ -1,4 +1,7 @@
 #include <GopherEngine/Core/MainLoop.hpp>
+#include <GopherEngine/Renderer/Renderer.hpp>
+
+#include <iostream>
 
 namespace GopherEngine {
     MainLoop::MainLoop()
@@ -15,7 +18,12 @@ namespace GopherEngine {
 
         window_.create_window();
 
-        renderer_.initialize(window_);
+        if(!window_.set_active(true)) {
+            std::cerr << "Failed to set window to active" << std::endl;
+            return EXIT_FAILURE;
+        }
+
+        renderer_.initialize(window_.get_width(), window_.get_height());
 
         while(window_.is_open())
         {
@@ -29,7 +37,8 @@ namespace GopherEngine {
             renderer_.draw();
             window_.display();
         }
-
+        
         return EXIT_SUCCESS;
     }
 }
+
