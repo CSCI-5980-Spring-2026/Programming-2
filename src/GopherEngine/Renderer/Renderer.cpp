@@ -80,18 +80,23 @@ namespace GopherEngine {
             .5f,  .5f,  .5f
         };
 
-        // Enable position and texture coordinates vertex components
+        // Enable the position vertex component
         glEnableClientState(GL_VERTEX_ARRAY);
         glVertexPointer(3, GL_FLOAT, 3 * sizeof(GLfloat), cube.data());
 
-        // Disable normal and color vertex components
+        // Disable normal, color, and texture coordinate vertex components
+        // We have not added shaders yet, so we will not use these attributes
         glDisableClientState(GL_NORMAL_ARRAY);
         glDisableClientState(GL_COLOR_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-        // Apply some transformations
+        // Set the modelview matrix to the identity matrix
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+
+        // Now translate the cube slightly away from the camera
+        // Recall that OpenGL uses a right-handed coordinate system
+        // with the camera looking down the negative Z axis.
         glTranslatef(0.f, 0.f, -2.f);
 
         // Draw the cube
